@@ -58,6 +58,7 @@
 
 # /main.py
 
+
 from analise.sistema import SistemaAnaliseEngajamento
 
 def pipeline_fase_3():

@@ -1,3 +1,5 @@
-from analise.sistema import SistemaAnaliseEngajamento as Sistema
+# from analise.sistema import SistemaAnaliseEngajamento as Sistema
 
-__all__ = ['Sistema']
+# __all__ = ['Sistema']
+
+from .sistema import SistemaAnaliseEngajamento
