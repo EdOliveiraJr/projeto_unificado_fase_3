@@ -1,44 +1,68 @@
-# /analise/algoritmos.py
+# analise/algoritmos.py
 
-def insertion_sort(lista: list, key=lambda x: x, reverse: bool = False):
+def quick_sort(lista, chave):
     """
-    Implementação do Insertion Sort.
-    - Complexidade de Tempo: O(n^2) no pior e médio caso. O(n) no melhor caso (lista já ordenada).
-    - Complexidade de Espaço: O(1) - ordenação in-place.
-    É eficiente para listas pequenas ou parcialmente ordenadas.
-    """
-    for i in range(1, len(lista)):
-        chave = lista[i]
-        j = i - 1
-        # Compara a chave com cada elemento à sua esquerda
-        # A condição de comparação muda com base no parâmetro 'reverse'
-        while j >= 0 and (key(chave) > key(lista[j]) if reverse else key(chave) < key(lista[j])):
-            lista[j + 1] = lista[j]
-            j -= 1
-        lista[j + 1] = chave
-    return lista
+    Implementação do Quick Sort para ordenar uma lista de objetos.
 
-def quick_sort(lista: list, key=lambda x: x, reverse: bool = False):
-    """
-    Implementação do Quick Sort.
-    - Complexidade de Tempo: O(n log n) no caso médio e melhor. O(n^2) no pior caso.
-    - Complexidade de Espaço: O(log n) a O(n), dependendo da implementação e do balanceamento das partições.
-    Geralmente mais rápido que outros algoritmos O(n^2) para grandes volumes de dados.
+    Args:
+        lista (list): A lista de objetos a ser ordenada.
+        chave (function): Uma função lambda para extrair a métrica de 
+                          comparação de cada objeto.
+                          Ex: lambda c: c.calcular_tempo_total_consumo()
+    
+    Complexidade de Tempo:
+        - Pior Caso: O(n^2) - Ocorre quando o pivô escolhido é sempre o menor
+          ou o maior elemento, levando a partições desbalanceadas.
+        - Caso Médio/Melhor Caso: O(n log n) - Ocorre quando o pivô divide
+          a lista em partições de tamanhos próximos.
+
+    Complexidade de Espaço:
+        - O(n) - Esta implementação não é "in-place", pois cria novas listas 
+          ('menores' e 'maiores') para o particionamento. Em cenários de 
+          recursão profunda, o espaço pode ser proporcional a n.
     """
     if len(lista) <= 1:
         return lista
     else:
-        # Escolha do pivô (aqui, o elemento do meio)
-        pivo = lista[len(lista) // 2]
+        # Escolhendo o pivô como o elemento do meio para um caso médio melhor
+        pivo_index = len(lista) // 2
+        pivo = lista[pivo_index]
         
-        # Particiona a lista com base no pivô
-        menores = [x for x in lista if key(x) < key(pivo)]
-        iguais = [x for x in lista if key(x) == key(pivo)]
-        maiores = [x for x in lista if key(x) > key(pivo)]
+        # Extrai o valor da métrica do pivô
+        valor_pivo = chave(pivo)
 
-        # A ordem da concatenação final depende do parâmetro 'reverse'
-        if reverse:
-            return quick_sort(maiores, key=key, reverse=reverse) + iguais + quick_sort(menores, key=key, reverse=reverse)
-        else:
-            return quick_sort(menores, key=key, reverse=reverse) + iguais + quick_sort(maiores, key=key, reverse=reverse)
+        # Particiona a lista (list comprehensions criam novas listas)
+        menores = [x for i, x in enumerate(lista) if i != pivo_index and chave(x) <= valor_pivo]
+        maiores = [x for i, x in enumerate(lista) if i != pivo_index and chave(x) > valor_pivo]
 
+        # Chamadas recursivas
+        return quick_sort(menores, chave) + [pivo] + quick_sort(maiores, chave)
+
+def insertion_sort(lista, chave):
+    """
+    Implementação do Insertion Sort. Útil para listas pequenas ou quase ordenadas.
+    Como mencionado pelo professor, é um algoritmo mais simples de implementar.
+
+    Complexidade de Tempo:
+        - Pior Caso/Caso Médio: O(n^2) - Ocorre quando a lista está em ordem
+          inversa.
+        - Melhor Caso: O(n) - Ocorre quando a lista já está ordenada.
+
+    Complexidade de Espaço:
+        - O(1) - É um algoritmo "in-place", ou seja, ordena a lista
+          utilizando uma quantidade constante de espaço adicional.
+    """
+    # Itera do segundo elemento até o final da lista
+    for i in range(1, len(lista)):
+        item_atual = lista[i]
+        valor_item_atual = chave(item_atual)
+        j = i - 1
+        
+        # Move os elementos que são maiores que o item_atual para a direita
+        while j >= 0 and chave(lista[j]) > valor_item_atual:
+            lista[j + 1] = lista[j]
+            j -= 1
+        
+        # Insere o item_atual em sua posição correta
+        lista[j + 1] = item_atual
+    return lista

@@ -62,21 +62,43 @@
 from analise.sistema import SistemaAnaliseEngajamento
 
 def pipeline_fase_3():
-    """
-    Função principal para executar o pipeline da Fase 3 do projeto.
-    """
-    # Cria uma instância do sistema de análise
+    print("************ Iniciando Pipeline - Fase 3 ************\n")
+    print("Análise de Engajamento com Estruturas de Dados e Algoritmos\n")
+
     sistema = SistemaAnaliseEngajamento()
 
-    # Executa o pipeline completo que carrega, processa e gera todos os relatórios
-    # O nome do arquivo CSV é passado como argumento aqui.
-    sistema.pipeline_completo("interacoes_globo.csv")
+    # 1. Carregar dados do CSV para a Fila
+    print("Passo 1: Carregando interações do CSV para a fila de processamento...")
+    sistema.carregar_interacoes_para_fila("interacoes_globo.csv")
+    print("-> Carga para a fila concluída.\n")
+
+    # 2. Processar interações da Fila para as Árvores
+    print("Passo 2: Processando interações da fila e populando as árvores...")
+    sistema.processar_interacoes_da_fila()
+    print("-> Processamento e população das árvores concluídos.\n")
+
+    # 3. Gerar Relatórios Ordenados
+    print("Passo 3: Gerando relatórios de engajamento com ordenação...")
+    
+    # Relatório de Top 5 conteúdos por tempo total de consumo
+    sistema.gerar_relatorio_top_conteudos(metrica='tempo_total_consumo', top_n=5)
+    
+    # Relatório de Top 5 conteúdos por total de interações de engajamento
+    sistema.gerar_relatorio_top_conteudos(metrica='total_interacoes', top_n=5)
+    
+    print("\n----------------------------------------------------")
 
 
 if __name__ == "__main__":
-    """
-    Ponto de entrada do script. A verificação __name__ == "__main__" garante
-    que o código dentro deste bloco só será executado quando o arquivo
-    main.py for rodado diretamente.
-    """
+    info = '''
+    Projeto Formação em Tecnologia Rede Globo
+    Fase 3: Análise de Engajamento com Estruturas de Dados
+    
+    Turma: 1372
+    Professor: Jorge Cristhian Chamby
+    Equipe:
+            Danilo, Daniel, Edvaldo, Malu, Felipe, Lucas
+    '''
+    print(info)
     pipeline_fase_3()
+    print("\n************  executado com sucesso! ************")
