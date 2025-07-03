@@ -1,5 +1,5 @@
-import BinaryNode
-import AVLTree
+from bynarytree import BinaryNode
+from avltree import AVLTree
 
 class ArvoreBinariaBusca:
     def __init__(self):
