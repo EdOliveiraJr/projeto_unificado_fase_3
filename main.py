@@ -1,6 +1,7 @@
 from analise import Sistema
 import sys
 
+
 def exibir_menu():
     print("\n====== MENU DE ANÁLISE DE ENGAJAMENTO ======")
     print("1. Carregar e processar interações do CSV")
@@ -10,6 +11,7 @@ def exibir_menu():
     print("5. Identificar top conteúdos por métrica")
     print("6. Sair")
     print("============================================")
+
 
 def main():
     sistema = Sistema()
@@ -65,11 +67,13 @@ def main():
                 print(f"Erro ao identificar top conteúdos: {e}")
 
         elif opcao == "6":
-            print("Saindo do programa...")
+            print("Saindo do programa...\n")
+            print("--- FIM ---\n")
             sys.exit(0)
 
         else:
             print("Opção inválida. Tente novamente.")
+
 
 if __name__ == "__main__":
     info = """
@@ -96,15 +100,9 @@ if __name__ == "__main__":
 *     Malu Fazendo                                             *
 *     Lucas Sandes                                             *
 *     Danilo Pinho                                             *
-*     Felipe Martins                                           *
 *                                                              *
 *                 Equipe: Serpentes Tech                       *
 ****************************************************************
 """
     print(info)
     main()
-
-
-
-
-
