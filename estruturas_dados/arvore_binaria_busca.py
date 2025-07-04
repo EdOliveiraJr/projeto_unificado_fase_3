@@ -1,5 +1,4 @@
-from bynarytree import BinaryNode
-from avltree import AVLTree
+from bintrees import AVLTree
 
 class ArvoreBinariaBusca:
     def __init__(self):
@@ -10,7 +9,7 @@ class ArvoreBinariaBusca:
 
     def buscar(self, chave):
         try:
-            return self._arvore_avl.search(chave)
+            return self._arvore_avl.get(chave)
         except KeyError:
             return None
 
@@ -21,4 +20,8 @@ class ArvoreBinariaBusca:
             pass
 
     def percurso_em_ordem(self):
-        return self._arvore_avl.in_order()
+        lista = []
+
+        self._arvore_avl.foreach(lambda _,valor: lista.append(valor), 0)
+        
+        return lista        
