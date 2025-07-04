@@ -1,6 +1,7 @@
 import csv
-from entidades import *
 
+from entidades import *
+from estruturas_dados.arvore_binaria_busca import ArvoreBinariaBusca
 
 class SistemaAnaliseEngajamento:
     VERSAO_ANALISE: str = "2.0"
@@ -8,10 +9,38 @@ class SistemaAnaliseEngajamento:
 
     def __init__(self):
         self.__plataformas_registradas: dict[Plataforma] = {}
-        self.__conteudos_registrados: dict[Conteudo]= {}
-        self.__usuarios_registrados: dict[Usuario]= {}
+        self.__arvore_conteudos = ArvoreBinariaBusca()
+        self.__arvore_usuarios = ArvoreBinariaBusca() 
         self.__proximo_id_plataforma = SistemaAnaliseEngajamento.id_plataforma_atual + 1
         SistemaAnaliseEngajamento.id_plataforma_atual += 1
+
+#Metodos de conteudo a partir da classe arvore_binaria_busca
+
+    def inserir_conteudo(self, conteudo):
+        self.__arvore_conteudos.inserir(conteudo._id_conteudo, conteudo)
+    
+    def buscar_conteudo(self, id_conteudo):
+        return self.__arvore_conteudos.buscar(id_conteudo)
+
+    def remover_conteudo(self, id_conteudo):
+        self.__arvore_conteudos.remover(id_conteudo)
+
+    def percurso_em_ordem(self):
+        return [valor for chave, valor in self.__arvore_conteudos.percurso_em_ordem()]    
+    
+#Metodos de usuario a partir da classe arvore_binaria_busca    
+
+    def inserir_usuario(self, usuario):
+        self.__arvore_usuarios.inserir(usuario._id_usuario, usuario)
+
+    def buscar_usuario(self, id_usuario):
+        return self.__arvore_usuarios.buscar(id_usuario)
+
+    def remover_usuario(self, id_usuario):
+        self.__arvore_usuarios.remover(id_usuario)
+
+    def percurso_em_ordem_usuarios(self):
+        return [valor for chave, valor in self.__arvore_usuarios.percurso_em_ordem()]
 
     def cadastrar_plataforma(self, nome: str) -> Plataforma:
         if nome not in self.__plataformas_registradas:
