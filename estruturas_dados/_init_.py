@@ -1,3 +1,3 @@
-from .arvore_binaria_busca import ArvoreBinariaBusca
+from estruturas_dados.arvore_binaria_busca import ArvoreBinariaBusca
 
-__all__ = ['arvore_binaria_busca']
+__all__ = ["ArvoreBinariaBusca"]
