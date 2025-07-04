@@ -1,7 +1,7 @@
 import csv
 
 from entidades import *
-from estruturas_dados.arvore_binaria_busca import ArvoreBinariaBusca
+from estruturas_dados import *
 
 class SistemaAnaliseEngajamento:
     VERSAO_ANALISE: str = "2.0"
