@@ -1,56 +1,108 @@
 from analise import Sistema
+import sys
 
-def pipeline():
-    print("************ Iniciando pipeline completo ************\n")
 
+def exibir_menu():
+    print("\n====== MENU DE ANÁLISE DE ENGAJAMENTO ======")
+    print("1. Carregar e processar interações do CSV")
+    print("2. Listar plataformas registradas")
+    print("3. Gerar relatório de engajamento dos conteúdos")
+    print("4. Gerar relatório de atividade dos usuários")
+    print("5. Identificar top conteúdos por métrica")
+    print("6. Sair")
+    print("============================================")
+
+
+def main():
     sistema = Sistema()
+    csv_path = "interacoes_globo.csv"  # ajuste se necessário
 
-    # 1. Processar CSV
-    print("1. Carregando e processando interações do CSV")
-    sistema.processar_interacoes_do_csv("interacoes_globo.csv")
-    print("-> Interações carregadas e processadas.\n")
+    while True:
+        exibir_menu()
+        opcao = input("Escolha uma opção: ").strip()
 
-    # 2. Listar plataformas
-    print("2. Listando plataformas registradas")
-    plataformas = sistema.listar_plataformas()
-    for p in plataformas:
-        print(f"- {p}")
-    print('\n ******************************************\n')
-    
-    # 3. Relatório de engajamento dos conteúdos
-    print("3. Gerando relatório de engajamento dos conteúdos")
-    sistema.gerar_relatorio_engajamento_conteudos()
-    print('\n ******************************************\n')
+        if opcao == "1":
+            try:
+                sistema.processar_interacoes_do_csv(csv_path)
+                print("Interações carregadas e processadas com sucesso.")
+            except Exception as e:
+                print(f"Erro ao processar CSV: {e}")
 
-    # 4. Relatório de atividade dos usuários
-    print("4. Gerando relatório de atividade dos usuários")
-    sistema.gerar_relatorio_atividade_usuarios()
-    print('\n ******************************************\n')
+        elif opcao == "2":
+            plataformas = sistema.listar_plataformas()
+            if plataformas:
+                print("Plataformas registradas:")
+                for p in plataformas:
+                    print(f"- {p}")
+            else:
+                print("Nenhuma plataforma registrada.")
 
-    print("5. Relatório de métricas de conteúdos")
-    print("Métrica - Total total de consumo")
-    sistema.identificar_top_conteudos('tempo_total_consumo')
-    print()
-    print("Métrica - Média de tempo de consumo")
-    sistema.identificar_top_conteudos('media_tempo_consumo')
-    print()
+        elif opcao == "3":
+            try:
+                sistema.gerar_relatorio_engajamento_conteudos()
+            except Exception as e:
+                print(f"Erro ao gerar relatório: {e}")
+
+        elif opcao == "4":
+            try:
+                sistema.gerar_relatorio_atividade_usuarios()
+            except Exception as e:
+                print(f"Erro ao gerar relatório: {e}")
+
+        elif opcao == "5":
+            print("Escolha a métrica:")
+            print("a) tempo_total_consumo")
+            print("b) media_tempo_consumo")
+            metrica = input("Digite a letra correspondente: ").strip().lower()
+            if metrica == "a":
+                metrica_nome = "tempo_total_consumo"
+            elif metrica == "b":
+                metrica_nome = "media_tempo_consumo"
+            else:
+                print("Opção de métrica inválida.")
+                continue
+            try:
+                sistema.identificar_top_conteudos(metrica_nome)
+            except Exception as e:
+                print(f"Erro ao identificar top conteúdos: {e}")
+
+        elif opcao == "6":
+            print("Saindo do programa...\n")
+            print("--- FIM ---\n")
+            sys.exit(0)
+
+        else:
+            print("Opção inválida. Tente novamente.")
 
 
 if __name__ == "__main__":
-             info = '''
-        Projeto Formação em Tecnologia Rede Globo
-        Fase 2: Análise de Engajamento de Mídias Globo com POO
-        
-        Turma: 1372
-        Professor: Bruno e Maurício
-        Equipe:
-                Edvaldo Oliveira
-                Daniel Brambila
-                Malu Fazendo
-                Lucas Sandes
-                Danilo Pinho
-                Felipe Martins
-    '''
-print(info)
-pipeline()
-print("************ Pipeline executado com sucesso! ************")
+    info = """
+****************************************************************
+*                                                              *
+*                 Projeto Unificado - Fase 3                   *
+*           Análise de Engajamento de Mídias Globo             *
+*                  com Estruturas de Dados                     *
+*   Módulo Foco: DS-PY-003 (Introdução a Algoritmos e          *
+*                 Estruturas de Dados)                         *
+*                                                              *
+*   Descrição: Aplicar os princípios fundamentais de           *
+*   Algoritmos e Estruturas de Dados na análise de dados       *
+*   de engajamento de mídias, utilizando as estruturas de      *
+*   dados adequadas para otimizar o processamento e a          *
+*   recuperação de informações.                                *
+*                                                              *
+*   Turma: 1372                Professor: Jorge                *
+*   Data: 07/07/2025                                           *
+*                                                              *
+*   Alunos:                                                    *
+*     Edvaldo Oliveira                                         *
+*     Daniel Brambila                                          *
+*     Malu Fazendo                                             *
+*     Lucas Sandes                                             *
+*     Danilo Pinho                                             *
+*                                                              *
+*                 Equipe: Serpentes Tech                       *
+****************************************************************
+"""
+    print(info)
+    main()
