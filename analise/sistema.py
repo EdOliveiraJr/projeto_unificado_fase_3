@@ -1,5 +1,6 @@
 import csv
 from entidades import *
+from estruturas_dados.fila import Fila
 
 
 class SistemaAnaliseEngajamento:
@@ -11,6 +12,7 @@ class SistemaAnaliseEngajamento:
         self.__conteudos_registrados: dict[Conteudo]= {}
         self.__usuarios_registrados: dict[Usuario]= {}
         self.__proximo_id_plataforma = SistemaAnaliseEngajamento.id_plataforma_atual + 1
+        self.__fila_interacoes_brutas = Fila()
         SistemaAnaliseEngajamento.id_plataforma_atual += 1
 
     def cadastrar_plataforma(self, nome: str) -> Plataforma:
@@ -28,67 +30,85 @@ class SistemaAnaliseEngajamento:
 
     def _carregar_interacoes_csv(self, path: str) -> list[dict]:
         with open(path, encoding="utf-8") as f:
-            return list(csv.DictReader(f))
+            lista = list(csv.DictReader(f))
+            for linha in lista:
+                print(f"{linha} \n")
+                self.__fila_interacoes_brutas.enfileirar(linha)
+            print (self.__fila_interacoes_brutas)
 
-    def processar_interacoes_do_csv(self, path: str):
-        interacoes = self._carregar_interacoes_csv(path)
-        for linha in interacoes:
-            if self.obter_plataforma(linha["plataforma"]) is None:
-                self.cadastrar_plataforma(linha["plataforma"])
+    def _processar_interacoes_da_fila(self):
+        lista = list()
+        while not self.__fila_interacoes_brutas.estaVazia(): 
+            linha = self.__fila_interacoes_brutas.desenfileirar()
+            lista.append(linha)
+            nome_plataforma = linha["plataforma"]
+            plataforma = self.cadastrar_plataforma(nome_plataforma)
+            id_conteudo = linha["id_conteudo"]
+            nome_conteudo = linha["nome_conteudo"]
+            conteudo = Conteudo(id_conteudo, nome_conteudo)
+            id_usuario = linha["id_usuario"]
+            usuario = Usuario(id_usuario)
+            interacao = Interacao(conteudo, plataforma, linha)
 
-            if self.__conteudos_registrados.get(linha["id_conteudo"]) is None:
-                if linha["nome_conteudo"].lower().find("podcast"):
-                    podcast = Podcast(
-                        linha["id_conteudo"],
-                        linha["nome_conteudo"],
-                        linha["watch_duration_seconds"],
-                    )
-                    self.__conteudos_registrados[linha["id_conteudo"]] = podcast
-                if linha["nome_conteudo"].lower().find("video"):
-                    video = Video(
-                        linha["id_conteudo"],
-                        linha["nome_conteudo"],
-                        linha["watch_duration_seconds"],
-                    )
-                    self.__conteudos_registrados[linha["id_conteudo"]] = video
+    # def processar_interacoes_do_csv(self, path: str):
+    #     interacoes = self._carregar_interacoes_csv(path)
+    #     for linha in interacoes:
+    #         if self.obter_plataforma(linha["plataforma"]) is None:
+    #             self.cadastrar_plataforma(linha["plataforma"])
 
-                if linha["nome_conteudo"].lower().find("artigo"):
-                    artigo = Artigo(
-                        linha["id_conteudo"],
-                        linha["nome_conteudo"],
-                        linha["watch_duration_seconds"],
-                    )
-                    self.__conteudos_registrados[linha["id_conteudo"]] = artigo
+    #         if self.__conteudos_registrados.get(linha["id_conteudo"]) is None:
+    #             if linha["nome_conteudo"].lower().find("podcast"):
+    #                 podcast = Podcast(
+    #                     linha["id_conteudo"],
+    #                     linha["nome_conteudo"],
+    #                     linha["watch_duration_seconds"],
+    #                 )
+    #                 self.__conteudos_registrados[linha["id_conteudo"]] = podcast
+    #             if linha["nome_conteudo"].lower().find("video"):
+    #                 video = Video(
+    #                     linha["id_conteudo"],
+    #                     linha["nome_conteudo"],
+    #                     linha["watch_duration_seconds"],
+    #                 )
+    #                 self.__conteudos_registrados[linha["id_conteudo"]] = video
 
-            if self.__usuarios_registrados.get(linha["id_usuario"]) is None:
-                usuario = Usuario(linha["id_usuario"])
-                self.__usuarios_registrados[linha["id_usuario"]] = usuario
+    #             if linha["nome_conteudo"].lower().find("artigo"):
+    #                 artigo = Artigo(
+    #                     linha["id_conteudo"],
+    #                     linha["nome_conteudo"],
+    #                     linha["watch_duration_seconds"],
+    #                 )
+    #                 self.__conteudos_registrados[linha["id_conteudo"]] = artigo
 
-            try:
-                plataforma: Plataforma = self.obter_plataforma(linha["plataforma"])
-                conteudo: Conteudo = self.__conteudos_registrados.get(linha["id_conteudo"])
-                usuario: Usuario = self.__usuarios_registrados.get(linha["id_usuario"])
+    #         if self.__usuarios_registrados.get(linha["id_usuario"]) is None:
+    #             usuario = Usuario(linha["id_usuario"])
+    #             self.__usuarios_registrados[linha["id_usuario"]] = usuario
 
-                try: 
-                    interacao = Interacao(conteudo, plataforma, linha)
-                except ValueError as e:
-                    print(f"Erro ao criar interação: {e}")
-                    continue
+    #         try:
+    #             plataforma: Plataforma = self.obter_plataforma(linha["plataforma"])
+    #             conteudo: Conteudo = self.__conteudos_registrados.get(linha["id_conteudo"])
+    #             usuario: Usuario = self.__usuarios_registrados.get(linha["id_usuario"])
+
+    #             try: 
+    #                 interacao = Interacao(conteudo, plataforma, linha)
+    #             except ValueError as e:
+    #                 print(f"Erro ao criar interação: {e}")
+    #                 continue
                     
-                try:
-                    conteudo.adicionar_interacao(interacao)
-                except ValueError as e:
-                    print(f"Erro ao adicionar interação ao conteúdo: {e}")
-                    continue
+    #             try:
+    #                 conteudo.adicionar_interacao(interacao)
+    #             except ValueError as e:
+    #                 print(f"Erro ao adicionar interação ao conteúdo: {e}")
+    #                 continue
                 
-                try:
-                    usuario.registrar_interacao(interacao)
-                except ValueError as e:
-                    print(f"Erro ao registrar interação no usuário: {e}")
-                    continue
+    #             try:
+    #                 usuario.registrar_interacao(interacao)
+    #             except ValueError as e:
+    #                 print(f"Erro ao registrar interação no usuário: {e}")
+    #                 continue
             
-            except ValueError as e:
-                print(f"Erro ao processar interação: {e}")
+    #         except ValueError as e:
+    #             print(f"Erro ao processar interação: {e}")
 
     def gerar_relatorio_engajamento_conteudos(self):
 
