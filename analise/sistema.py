@@ -77,6 +77,8 @@ class SistemaAnaliseEngajamento:
             id_usuario = linha["id_usuario"]
             usuario = Usuario(id_usuario)
             interacao = Interacao(conteudo, plataforma, linha)
+            conteudo.adicionar_interacao(interacao)
+            usuario.registrar_interacao(interacao)
 
     # def processar_interacoes_do_csv(self, path: str):
     #     interacoes = self._carregar_interacoes_csv(path)
