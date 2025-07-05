@@ -2,6 +2,7 @@ import csv
 from entidades import *
 from estruturas_dados import *
 
+
 class SistemaAnaliseEngajamento:
     VERSAO_ANALISE: str = "2.0"
     id_plataforma_atual: int = 0
@@ -64,7 +65,7 @@ class SistemaAnaliseEngajamento:
     def processar_interacoes_do_csv(self, path: str):
         self._carregar_interacoes_csv(path)
 
-        while not self.__fila_interacoes_brutas.estaVazia():
+        while not self.__fila_interacoes_brutas.esta_vazia():
             linha = self.__fila_interacoes_brutas.desenfileirar()
 
             if self.obter_plataforma(linha["plataforma"]) is None:
@@ -128,7 +129,7 @@ class SistemaAnaliseEngajamento:
 
     def gerar_relatorio_engajamento_conteudos(self):
 
-        for conteudo in self.__arvore_conteudos.values():
+        for conteudo in self.__arvore_conteudos.percurso_em_ordem():
             print(f"\nConteúdo: {conteudo}")
             print("- Total de interações de engajamento:")
             print(f"  • {conteudo.calcular_total_interacoes_engajamento()}")
@@ -141,7 +142,7 @@ class SistemaAnaliseEngajamento:
     def gerar_relatorio_atividade_usuarios(self):
         print("Chamando métodos da classe Usuario")
 
-        for usuario in self.__arvore_usuarios.values():
+        for usuario in self.__arvore_usuarios.percurso_em_ordem():
             print(f"\nUsuário: {usuario}")
 
             for interacao in usuario._interacoes_realizadas:
@@ -205,22 +206,22 @@ class SistemaAnaliseEngajamento:
             )
 
         if metrica == "tempo_total_consumo":
-            for conteudo in self.__arvore_conteudos.values():
+            for conteudo in self.__arvore_conteudos.percurso_em_ordem():
                 print(f"- {conteudo.nome_conteudo}:")
                 print(f"  • {conteudo.calcular_tempo_total_consumo()} segundos")
                 conteudos = sorted(
-                    self.__arvore_conteudos.values(),
+                    self.__arvore_conteudos.percurso_em_ordem(),
                     key=lambda c: c.calcular_tempo_total_consumo(),
                     reverse=True,
                 )
             return conteudos[:top_n]
 
         if metrica == "media_tempo_consumo":
-            for conteudo in self.__arvore_conteudos.values():
+            for conteudo in self.__arvore_conteudos.percurso_em_ordem():
                 print(f"- {conteudo.nome_conteudo}:")
                 print(f"  • {conteudo.calcular_media_tempo_consumo():.2f} segundos")
                 conteudos = sorted(
-                    self.__arvore_conteudos.values(),
+                    self.__arvore_conteudos.percurso_em_ordem(),
                     key=lambda c: c.calcular_media_tempo_consumo(),
                     reverse=True,
                 )
