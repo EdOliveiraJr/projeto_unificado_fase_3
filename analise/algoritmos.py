@@ -1,5 +1,3 @@
-# analise/algoritmos.py
-
 def quick_sort(lista, chave):
     """
     Implementação do Quick Sort para ordenar uma lista de objetos.
