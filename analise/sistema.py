@@ -1,7 +1,7 @@
 import csv
 from entidades import *
 from estruturas_dados import *
-
+from analise.algoritmos import quick_sort
 
 class SistemaAnaliseEngajamento:
     VERSAO_ANALISE: str = "2.0"
@@ -15,8 +15,7 @@ class SistemaAnaliseEngajamento:
         self.__fila_interacoes_brutas = Fila()
         SistemaAnaliseEngajamento.id_plataforma_atual += 1
 
-    # Metodos de conteudo a partir da classe arvore_binaria_busca
-
+    # Métodos de conteudo a partir da classe arvore_binaria_busca
     def inserir_conteudo(self, conteudo):
         self.__arvore_conteudos.inserir(conteudo._id_conteudo, conteudo)
 
@@ -29,8 +28,7 @@ class SistemaAnaliseEngajamento:
     def percurso_em_ordem(self):
         return [valor for chave, valor in self.__arvore_conteudos.percurso_em_ordem()]
 
-    # Metodos de usuario a partir da classe arvore_binaria_busca
-
+    # Métodos de usuario a partir da classe arvore_binaria_busca
     def inserir_usuario(self, usuario):
         self.__arvore_usuarios.inserir(usuario._id_usuario, usuario)
 
@@ -128,7 +126,6 @@ class SistemaAnaliseEngajamento:
                 print(f"Erro ao processar interação: {e}")
 
     def gerar_relatorio_engajamento_conteudos(self):
-
         for conteudo in self.__arvore_conteudos.percurso_em_ordem():
             print(f"\nConteúdo: {conteudo}")
             print("- Total de interações de engajamento:")
@@ -141,7 +138,6 @@ class SistemaAnaliseEngajamento:
 
     def gerar_relatorio_atividade_usuarios(self):
         print("Chamando métodos da classe Usuario")
-
         for usuario in self.__arvore_usuarios.percurso_em_ordem():
             print(f"\nUsuário: {usuario}")
 
@@ -195,34 +191,21 @@ class SistemaAnaliseEngajamento:
                     print(f"  • {plataforma}: {valor} vez(es)")
                 print()
 
-    def identificar_top_conteudos(self, metrica, top_n=3):
-        if metrica not in [
-            "tempo_total_consumo",
-            "percentual_medio_assistido",
-            "media_tempo_consumo",
-        ]:
+    def identificar_top_conteudos(self, metrica: str, top_n: int = 5):
+        metricas = {
+            "tempo_total_consumo": "Tempo Total de Consumo",
+            "media_tempo_consumo": "Tempo Médio de Consumo",
+        }
+        print(f"\n--- Relatório: Top {top_n} Conteúdos por {metricas[metrica]} ---")
+        todos_conteudos = self.__arvore_conteudos.percurso_em_ordem()
+        if metrica == "tempo_total_consumo":
+            chave = lambda c: c.calcular_tempo_total_consumo()
+        elif metrica == "media_tempo_consumo":
+            chave = lambda c: c.calcular_total_interacoes_engajamento()
+        else:
             raise ValueError(
                 "Métrica inválida. Use 'tempo_total_consumo', 'percentual_medio_assistido' ou 'media_tempo_consumo'."
             )
-
-        if metrica == "tempo_total_consumo":
-            for conteudo in self.__arvore_conteudos.percurso_em_ordem():
-                print(f"- {conteudo.nome_conteudo}:")
-                print(f"  • {conteudo.calcular_tempo_total_consumo()} segundos")
-                conteudos = sorted(
-                    self.__arvore_conteudos.percurso_em_ordem(),
-                    key=lambda c: c.calcular_tempo_total_consumo(),
-                    reverse=True,
-                )
-            return conteudos[:top_n]
-
-        if metrica == "media_tempo_consumo":
-            for conteudo in self.__arvore_conteudos.percurso_em_ordem():
-                print(f"- {conteudo.nome_conteudo}:")
-                print(f"  • {conteudo.calcular_media_tempo_consumo():.2f} segundos")
-                conteudos = sorted(
-                    self.__arvore_conteudos.percurso_em_ordem(),
-                    key=lambda c: c.calcular_media_tempo_consumo(),
-                    reverse=True,
-                )
-            return conteudos[:top_n]
+        ordenados = quick_sort(todos_conteudos, chave=chave)[::-1]
+        for i, c in enumerate(ordenados[:top_n]):
+            print(f"{i + 1}. '{c.nome_conteudo}' | {metricas[metrica]}: {chave(c)}")
