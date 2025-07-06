@@ -204,7 +204,7 @@ class SistemaAnaliseEngajamento:
             chave = lambda c: c.calcular_total_interacoes_engajamento()
         else:
             raise ValueError(
-                "Métrica inválida. Use 'tempo_total_consumo', 'percentual_medio_assistido' ou 'media_tempo_consumo'."
+                "Métrica inválida. Use 'tempo_total_consumo' ou 'media_tempo_consumo'."
             )
         ordenados = quick_sort(todos_conteudos, chave=chave)[::-1]
         for i, c in enumerate(ordenados[:top_n]):
