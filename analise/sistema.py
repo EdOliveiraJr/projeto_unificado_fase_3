@@ -1,7 +1,7 @@
 import csv
 from entidades import *
 from estruturas_dados import *
-from analise.algoritmos import quick_sort
+from analise.algoritmos_ordenacao import quick_sort
 
 class SistemaAnaliseEngajamento:
     VERSAO_ANALISE: str = "2.0"

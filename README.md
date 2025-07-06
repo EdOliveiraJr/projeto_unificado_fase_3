@@ -35,10 +35,12 @@ projeto_engajamento_fase_3/
 │
 ├── analise/
 │   ├── __init__.py
+|   ├── algoritmos_ordenacao.py    # Disponibiliza os métodos quick_sort() e insertion_sort()
 │   └── sistema.py                 # Classe SistemaAnaliseEngajamento (adaptada)
 |
 └── README.md
 ```
+
 ![Diagrama de módulos](img/diagrama_de_modulos_fase_3.png)
 
 ---
@@ -80,7 +82,7 @@ projeto_engajamento_fase_3/
 
 ### 🌳 Árvores de Busca Binária (BST)
 
-- Armazenam usuários e conteúdos usando chaves únicas (_id_usuario, _id_conteudo).
+- Armazenam usuários e conteúdos usando chaves únicas (\_id_usuario, \_id_conteudo).
 - Operações principais:
   - `inserir()`
   - `buscar()`
@@ -119,17 +121,25 @@ Para cada estrutura e algoritmo implementado, é fornecida uma análise de compl
 ## 🚀 Como Executar
 
 1. Clone o repositório:
+
    ```bash
    git clone https://github.com/seu-usuario/projeto_engajamento_fase_3.git
    cd projeto_engajamento_fase_3
    ```
 
 2. Certifique-se de que o Python 3 está instalado:
+
    ```bash
    python3 --version
    ```
 
-3. Execute o projeto:
+3. Certifique-se de que a biblioteca bintress está instalada, para instalar execute:
+
+   ```bash
+   pip install bintrees
+   ```
+
+4. Execute o projeto:
    ```bash
    python main.py
    ```
@@ -161,9 +171,9 @@ Para cada estrutura e algoritmo implementado, é fornecida uma análise de compl
 
 ## Equipe de colaboradores
 
-| <img src="https://github.com/EdOliveiraJr.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Edvaldo Oliveira"/> | <img src="https://github.com/malufazenda.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Malu Fazendo"/> | <img src="https://github.com/daniels070.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Daniel Brambila"/> | <img src="https://github.com/danilodpx.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Danilo Pinho"/> | <img src="https://github.com/LucasSandes07.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Lucas Sandes"/> | <img src="https://github.com/eufmartins.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Felipe Martins"/> |
-| :-----------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
-|                            <a href="https://github.com/EdOliveiraJr" target="_blank"> Edvaldo Oliveira</a>                            |                            <a href="https://github.com/malufazenda" target="_blank"> Malu Fazenda</a>                            |                           <a href="https://github.com/daniels070" target="_blank"> Daniel Brambila </a>                            |                           <a href="https://github.com/danilodpx" target="_blank"> Danilo Pinho </a>                            |                           <a href="https://github.com/LucasSandes07" target="_blank"> Lucas Sandes </a>                            |                           <a href="https://github.com/eufmartins" target="_blank"> Felipe Martins </a>                            |
+| <img src="https://github.com/EdOliveiraJr.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Edvaldo Oliveira"/> | <img src="https://github.com/malufazenda.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Malu Fazendo"/> | <img src="https://github.com/daniels070.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Daniel Brambila"/> | <img src="https://github.com/danilodpx.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Danilo Pinho"/> | <img src="https://github.com/LucasSandes07.png" width="100px" style="border-radius: 50%;" alt="Foto do colaborador Lucas Sandes"/> |
+| :-----------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
+|                            <a href="https://github.com/EdOliveiraJr" target="_blank"> Edvaldo Oliveira</a>                            |                            <a href="https://github.com/malufazenda" target="_blank"> Malu Fazenda</a>                            |                           <a href="https://github.com/daniels070" target="_blank"> Daniel Brambila </a>                            |                           <a href="https://github.com/danilodpx" target="_blank"> Danilo Pinho </a>                            |                           <a href="https://github.com/LucasSandes07" target="_blank"> Lucas Sandes </a>                            |
 
 ---
 
