@@ -1,6 +1,5 @@
 from bintrees import AVLTree
 
-
 class ArvoreBinariaBusca:
     """
     Implementação de uma Árvore de Busca Binária (Binary Search Tree - BST)

@@ -2,20 +2,58 @@ from analise import Sistema
 import sys
 
 
+def exibir_infos_projeto():
+    print(
+        """
+            ****************************************************************
+            *                                                              *
+            *                 Projeto Unificado - Fase 3                   *
+            *           Análise de Engajamento de Mídias Globo             *
+            *                  com Estruturas de Dados                     *
+            *   Módulo Foco: DS-PY-003 (Introdução a Algoritmos e          *
+            *                 Estruturas de Dados)                         *
+            *                                                              *
+            *   Descrição: Aplicar os princípios fundamentais de           *
+            *   Algoritmos e Estruturas de Dados na análise de dados       *
+            *   de engajamento de mídias, utilizando as estruturas de      *
+            *   dados adequadas para otimizar o processamento e a          *
+            *   recuperação de informações.                                *
+            *                                                              *
+            *   Turma: 1372                Professor: Jorge Chamby         *
+            *   Data: 07/07/2025                                           *
+            *                                                              *
+            *   Alunos:                                                    *
+            *     Edvaldo Oliveira                                         *
+            *     Daniel Brambila                                          *
+            *     Malu Fazendo                                             *
+            *     Lucas Sandes                                             *
+            *     Danilo Pinho                                             *
+            *                                                              *
+            *                 Equipe: Serpentes Tech                       *
+            ****************************************************************
+        """
+    )
+
+
 def exibir_menu():
-    print("\n====== MENU DE ANÁLISE DE ENGAJAMENTO ======")
-    print("1. Carregar e processar interações do CSV")
-    print("2. Listar plataformas registradas")
-    print("3. Gerar relatório de engajamento dos conteúdos")
-    print("4. Gerar relatório de atividade dos usuários")
-    print("5. Identificar top conteúdos por métrica")
-    print("6. Sair")
-    print("============================================")
+    print(
+        """
+            ====== MENU DE ANÁLISE DE ENGAJAMENTO ======
+            1. Carregar e processar interações do CSV
+            2. Listar plataformas registradas
+            3. Gerar relatório de engajamento dos conteúdos
+            4. Gerar relatório de atividade dos usuários
+            5. Identificar top conteúdos por métrica
+            6. Sair
+            ============================================
+        """
+    )
 
 
 def main():
     sistema = Sistema()
     csv_path = "interacoes_globo.csv"  # ajuste se necessário
+    exibir_infos_projeto()
 
     while True:
         exibir_menu()
@@ -67,8 +105,8 @@ def main():
                 print(f"Erro ao identificar top conteúdos: {e}")
 
         elif opcao == "6":
-            print("Saindo do programa...\n")
-            print("--- FIM ---\n")
+            print("\n           Saindo do programa...\n")
+            print("           --- FIM ---\n")
             sys.exit(0)
 
         else:
@@ -76,33 +114,4 @@ def main():
 
 
 if __name__ == "__main__":
-    info = """
-****************************************************************
-*                                                              *
-*                 Projeto Unificado - Fase 3                   *
-*           Análise de Engajamento de Mídias Globo             *
-*                  com Estruturas de Dados                     *
-*   Módulo Foco: DS-PY-003 (Introdução a Algoritmos e          *
-*                 Estruturas de Dados)                         *
-*                                                              *
-*   Descrição: Aplicar os princípios fundamentais de           *
-*   Algoritmos e Estruturas de Dados na análise de dados       *
-*   de engajamento de mídias, utilizando as estruturas de      *
-*   dados adequadas para otimizar o processamento e a          *
-*   recuperação de informações.                                *
-*                                                              *
-*   Turma: 1372                Professor: Jorge                *
-*   Data: 07/07/2025                                           *
-*                                                              *
-*   Alunos:                                                    *
-*     Edvaldo Oliveira                                         *
-*     Daniel Brambila                                          *
-*     Malu Fazendo                                             *
-*     Lucas Sandes                                             *
-*     Danilo Pinho                                             *
-*                                                              *
-*                 Equipe: Serpentes Tech                       *
-****************************************************************
-"""
-    print(info)
     main()
