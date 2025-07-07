@@ -1,7 +1,6 @@
 from analise import Sistema
 import sys
 
-
 def exibir_infos_projeto():
     print(
         """
@@ -34,7 +33,6 @@ def exibir_infos_projeto():
         """
     )
 
-
 def exibir_menu():
     print(
         """
@@ -48,7 +46,6 @@ def exibir_menu():
             ============================================
         """
     )
-
 
 def main():
     sistema = Sistema()
@@ -111,7 +108,6 @@ def main():
 
         else:
             print("Opção inválida. Tente novamente.")
-
 
 if __name__ == "__main__":
     main()
