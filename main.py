@@ -25,7 +25,7 @@ def exibir_infos_projeto():
             *   Alunos:                                                    *
             *     Edvaldo Oliveira                                         *
             *     Daniel Brambila                                          *
-            *     Malu Fazendo                                             *
+            *     Malu Fazenda                                             *
             *     Lucas Sandes                                             *
             *     Danilo Pinho                                             *
             *                                                              *

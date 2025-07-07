@@ -201,11 +201,19 @@ class SistemaAnaliseEngajamento:
         if metrica == "tempo_total_consumo":
             chave = lambda c: c.calcular_tempo_total_consumo()
         elif metrica == "media_tempo_consumo":
-            chave = lambda c: c.calcular_total_interacoes_engajamento()
+            chave = lambda c: c.media_tempo_consumo()
         else:
             raise ValueError(
-                "Métrica inválida. Use 'tempo_total_consumo' ou 'media_tempo_consumo'."
+                "Métrica inválida. Use 'tempo_total_consumo', 'percentual_medio_assistido' ou 'media_tempo_consumo'."
             )
         ordenados = quick_sort(todos_conteudos, chave=chave)[::-1]
         for i, c in enumerate(ordenados[:top_n]):
-            print(f"{i + 1}. '{c.nome_conteudo}' | {metricas[metrica]}: {chave(c)}")
+            print(f"{i + 1}. '{c.nome_conteudo}' | {metricas[metrica]}: {self.tempo_formatado(chave(c))}")
+
+    def tempo_formatado(tempo) -> str:
+        segundos = tempo % (24 * 3600)
+        horas = segundos // 3600
+        segundos %= 3600
+        minutos = segundos // 60
+        segundos %= 60
+        return f"{horas}h {minutos}m {segundos}s"
